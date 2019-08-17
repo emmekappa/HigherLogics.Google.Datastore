@@ -20,6 +20,23 @@ for small to medium sized projects:
 It uses the standard attributes in the `System.ComponentModel.DataAnnotations`
 namespace to designate the entity keys.
 
+# Customizing Entity fields
+
+You can specify custom name for fields using the `EntityFieldAttribute`  
+
+    public class Foo
+    {
+        [Key]
+        public long Baz { get; set; }
+        
+        [EntityField("__bar")]
+        public string Bar { get; set; }
+    }
+
+This can be helpful in order to working with legacy databases or 
+protect your data from property renames.
+
+
 # Custom Value Conversions
 
 Mapping should work for most built in CLR types, including all primitive
@@ -54,6 +71,19 @@ you can easily convert to a typed sequence as follows:
 
     var results = db.RunQuery(query)
                     .Entities<Foo>();
+
+Filters can be expressed using the following: 
+
+    Filter<Foo>.Property(x => x.Bar, "something", Operator.Equal);
+    
+or
+
+    Filter<Foo>.Equal(x => x.Bar, "something");
+    Filter<Foo>.GreaterThan(x => x.Bar, 1);
+    Filter<Foo>.GreaterOrEqualThan(x => x.Bar, 1);
+    ...
+
+
 
 # Performance Optimizations
 
