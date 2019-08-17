@@ -1,15 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.ComponentModel.DataAnnotations;
 using Google.Cloud.Datastore.V1;
 using Grpc.Core;
 using Xunit;
-using HigherLogics.Google.Datastore;
 
-namespace MapperTests
+namespace HigherLogics.Google.Datastore.Tests
 {
     public static class DataStoreTests
     {
