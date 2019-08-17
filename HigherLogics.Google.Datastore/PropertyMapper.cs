@@ -87,15 +87,16 @@ namespace HigherLogics.Google.Datastore
                 {
                     // this is a reference type, so accumulate a list of getters/setters for the type's members
                     //FIXME: add support for overridable field members via attributes
+                    var fieldName = member.GetCustomAttribute<EntityFieldAttribute>()?.FieldName ?? member.Name;
                     var tset = typeof(Action<,>).MakeGenericType(objType, member.PropertyType);
                     from[propCount] = (Action<Entity, T>)sset
                         .MakeGenericMethod(objType, member.PropertyType)
-                        .Invoke(null, new object[] { member.Name, member.GetSetMethod().CreateDelegate(tset) });
+                        .Invoke(null, new object[] { fieldName, member.GetSetMethod().CreateDelegate(tset) });
 
                     var tget = typeof(Func<,>).MakeGenericType(objType, member.PropertyType);
                     to[propCount++] = (Action<T, Entity>)sget
                         .MakeGenericMethod(objType, member.PropertyType)
-                        .Invoke(null, new object[] { member.Name, member.GetGetMethod().CreateDelegate(tget) });
+                        .Invoke(null, new object[] { fieldName, member.GetGetMethod().CreateDelegate(tget) });
                 }
             }
             //FIXME: should probably remove this check, probably move it to Mapper.cs as precondition to
