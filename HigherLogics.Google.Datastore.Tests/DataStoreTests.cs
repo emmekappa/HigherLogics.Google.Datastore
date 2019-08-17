@@ -15,10 +15,10 @@ namespace HigherLogics.Google.Datastore.Tests
         [Fact]
         public static void Simple()
         {
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var x = new Simple { Baz = "Hello world!" };
             var xkey = db.Insert(x);
-            var db2 = TestDatastoreClientFactory.Create();
+            var db2 = TestDatastoreClient.Create();
             var y = db2.Lookup(xkey, new Simple());
             Assert.Equal(x.Bar, xkey.Id());
             Assert.Equal(x.Bar, y.Bar);
@@ -36,7 +36,7 @@ namespace HigherLogics.Google.Datastore.Tests
         [Fact]
         public static void FailValidation()
         {
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var x = new ValidatedSample { Name = "hello world!" };
             Assert.Throws<ValidationException>(() => db.Insert(x));
             Assert.Throws<ValidationException>(() => db.Upsert(x));
@@ -48,10 +48,10 @@ namespace HigherLogics.Google.Datastore.Tests
         [Fact]
         public static void DeleteSimple()
         {
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var x = new Simple { Baz = "Hello world!" };
             var xkey = db.Upsert(x);
-            var db2 = TestDatastoreClientFactory.Create();
+            var db2 = TestDatastoreClient.Create();
             var y = db2.Lookup(xkey, new Simple());
             Assert.Equal(x.Bar, xkey.Id());
             Assert.Equal(x.Bar, y.Bar);
@@ -72,7 +72,7 @@ namespace HigherLogics.Google.Datastore.Tests
                 Amount = 987654321M,
                 IO = new MemoryStream(Encoding.ASCII.GetBytes("hello world!")),
             };
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var xkey = db.Insert(x);
             var y = db.Lookup(xkey, new Complex());
             Assert.Equal(x.Id, y.Id);
@@ -107,7 +107,7 @@ namespace HigherLogics.Google.Datastore.Tests
                     new Simple { Baz = "Simple2" },
                 }
             };
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var xkey = db.Insert(x);
             var rt = db.Lookup(xkey, new NestedEntities());
             Assert.Equal(x.Id, rt.Id);
@@ -142,7 +142,7 @@ namespace HigherLogics.Google.Datastore.Tests
                     }
                 },
             };
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var xkey = db.Insert(x);
             var rt = db.Lookup(xkey, new NestedStruct());
             Assert.Equal(x.Id, rt.Id);
@@ -162,7 +162,7 @@ namespace HigherLogics.Google.Datastore.Tests
             {
                 Simple = new FK<Simple>(s),
             };
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var skey = db.Upsert(s);
             Assert.Equal(s.Bar, skey.Id());
 
@@ -212,7 +212,7 @@ namespace HigherLogics.Google.Datastore.Tests
                     new FK<Simple>(new Simple{ Baz = "Index 2"}),
                 },
             };
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             var xsimple = db.Upsert(x.Simple.Value);
             Assert.NotNull(xsimple);
             Assert.NotEqual(0, x.Simple.Value.Bar);
@@ -240,9 +240,9 @@ namespace HigherLogics.Google.Datastore.Tests
         [Fact]
         public static void QueryTests()
         {
-            var db = TestDatastoreClientFactory.Create();
+            var db = TestDatastoreClient.Create();
             
-            DeleteAllEntitiesOfKind<Simple>();
+            TestDatastoreClient.DeleteAllEntitiesOfKind<Simple>();
             
             db.Insert(new Simple()
             {
@@ -260,16 +260,5 @@ namespace HigherLogics.Google.Datastore.Tests
             Assert.Equal(2, queryResult.Count());
         }
 
-        private static void DeleteAllEntitiesOfKind<T>() where T : class
-        {
-            var db = TestDatastoreClientFactory.Create();
-            var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
-            
-            using(var transaction = db.BeginTransaction()) {
-                
-                transaction.Delete<T>(queryResult);
-                transaction.Commit();
-            }
-        }
     }
 }

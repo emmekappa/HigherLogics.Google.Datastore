@@ -3,7 +3,7 @@ using Grpc.Core;
 
 namespace HigherLogics.Google.Datastore.Tests
 {
-    public class TestDatastoreClientFactory
+    public class TestDatastoreClient
     {
         const string emulatorHost = "localhost";
         const int emulatorPort = 8081;
@@ -14,6 +14,18 @@ namespace HigherLogics.Google.Datastore.Tests
         {
             var client = DatastoreClient.Create(new Channel(emulatorHost, emulatorPort, ChannelCredentials.Insecure));
             return DatastoreDb.Create(projectId, namespaceId, client);
+        }
+        
+        public static void DeleteAllEntitiesOfKind<T>() where T : class
+        {
+            var db = Create();
+            var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
+            
+            using(var transaction = db.BeginTransaction()) {
+                
+                transaction.Delete<T>(queryResult);
+                transaction.Commit();
+            }
         }
     }
 }
