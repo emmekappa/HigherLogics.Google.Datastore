@@ -29,3 +29,5 @@ jobs:
       run: dotnet build --configuration Release
     - name: Test
       run: dotnet test
+      env: 
+        DATASTORE_EMULATOR_HOST: datastore:8081
