@@ -30,4 +30,4 @@ jobs:
     - name: Test
       run: dotnet test
       env: 
-        DATASTORE_EMULATOR_HOST: "datastore:8081"
+        DATASTORE_EMULATOR_HOST: datastore:${{ job.services.datastore.ports[8081] }}
