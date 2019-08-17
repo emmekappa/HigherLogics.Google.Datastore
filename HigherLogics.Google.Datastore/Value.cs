@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using Google.Cloud.Datastore.V1;
 using W = Google.Protobuf.WellKnownTypes;
 
-[assembly: InternalsVisibleTo("MapperTests")]
+[assembly: InternalsVisibleTo("HigherLogics.Google.Datastore.Tests")]
 namespace HigherLogics.Google.Datastore
 {
     /// <summary>

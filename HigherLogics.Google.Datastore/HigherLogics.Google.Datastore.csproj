@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.0-beta1</Version>
     <Description>A simple entity auto-mapper.</Description>
@@ -11,6 +10,7 @@
     <RepositoryUrl>https://github.com/naasking/HigherLogics.Google.Datastore</RepositoryUrl>
     <PackageReleaseNotes>Initial release supporting simple convention-based property mappings.</PackageReleaseNotes>
     <AssemblyName>HigherLogics.Google.Datastore</AssemblyName>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
