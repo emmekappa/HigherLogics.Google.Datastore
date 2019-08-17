@@ -1,3 +1,4 @@
+using System;
 using Google.Cloud.Datastore.V1;
 using Grpc.Core;
 
@@ -12,8 +13,14 @@ namespace HigherLogics.Google.Datastore.Tests
 
         public static DatastoreDb Create()
         {
-            var client = DatastoreClient.Create(new Channel(emulatorHost, emulatorPort, ChannelCredentials.Insecure));
-            return DatastoreDb.Create(projectId, namespaceId, client);
+            var datastoreDbBuilder = new DatastoreDbBuilder()
+            {
+                ProjectId = projectId,
+                EmulatorDetection = EmulatorDetection.EmulatorOnly,
+            };
+            return datastoreDbBuilder.Build();
+            /*var client = DatastoreClient.Create(new Channel(emulatorHost, emulatorPort, ChannelCredentials.Insecure));
+            return DatastoreDb.Create(projectId, namespaceId, client);*/
         }
         
         public static void DeleteAllEntitiesOfKind<T>() where T : class
