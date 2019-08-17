@@ -13,6 +13,8 @@ jobs:
           DATASTORE_LISTEN_ADDRESS: 0.0.0.0:8081
         ports:
         - "8081:8081"
+        volumes:
+        - /opt/data
     
     runs-on: ubuntu-latest
     
