@@ -1,0 +1,31 @@
+name: ASP.NET Core CI
+
+on: [push]
+
+jobs:
+  build:
+  
+    services:
+      datastore:
+        image: singularities/datastore-emulator
+        env:
+          DATASTORE_PROJECT_ID: project-test
+          DATASTORE_LISTEN_ADDRESS: 0.0.0.0:8081
+        ports:
+        - "8081:8081"
+        volumes:
+        - /opt/data
+        options: --entrypoint /start-datastore
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Build
+      run: dotnet build --configuration Release
+    - name: Test
+      run: dotnet test
