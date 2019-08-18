@@ -21,7 +21,10 @@ jobs:
     steps:
     - uses: actions/gcloud/cli@master
       with: 
-          args: beta emulators datastore start --quiet --no-store-on-disk --project mappertests --host-port 0.0.0.0:8081 
+          args: components install cloud-datastore-emulator
+    - uses: actions/gcloud/cli@master
+        with:
+          args: beta emulators datastore start --quiet --no-store-on-disk --project mappertests --host-port 0.0.0.0:8081
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
