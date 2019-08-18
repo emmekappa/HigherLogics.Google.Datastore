@@ -21,6 +21,7 @@ namespace HigherLogics.Google.Datastore.Tests
         {
             _testOutputHelper.WriteLine($"DATASTORE_EMULATOR_HOST ENV IS = {Environment.GetEnvironmentVariable("DATASTORE_EMULATOR_HOST")}");
         }
+        
         [Fact]
         public void FilterEqual()
         {
