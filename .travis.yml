@@ -1,0 +1,13 @@
+language: csharp
+dotnet: 2.2.401
+addons: 
+  apt:
+    update: true
+    packages:
+      - google-cloud-sdk
+before_script:
+  - gcloud beta emulators datastore start &
+  - $(gcloud beta emulators datastore env-init)
+script:
+  - dotnet build --configuration Release
+  - dotnet test --logger:"console;verbosity=detailed"
