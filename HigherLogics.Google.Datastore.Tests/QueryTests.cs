@@ -3,11 +3,24 @@ using System.Linq;
 using System.Linq.Expressions;
 using Google.Cloud.Datastore.V1;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace HigherLogics.Google.Datastore.Tests
 {
     public class QueryTests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public QueryTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
+        [Fact]
+        public void DebugEnvVar()
+        {
+            _testOutputHelper.WriteLine($"DATASTORE_EMULATOR_HOST ENV IS = {Environment.GetEnvironmentVariable("DATASTORE_EMULATOR_HOST")}");
+        }
         [Fact]
         public void FilterEqual()
         {
