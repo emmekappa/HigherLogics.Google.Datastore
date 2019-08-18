@@ -1,5 +1,6 @@
 language: csharp
 dotnet: 2.2.401
+mono: none
 before_install: 
     apt-get update -y
 install:
