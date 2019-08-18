@@ -2,9 +2,9 @@ language: csharp
 dotnet: 2.2.401
 mono: none
 before_install: 
-    apt-get update -y
+  - sudo apt-get update -y
 install:
-    apt-get install google-cloud-sdk -y
+  - sudo apt-get install google-cloud-sdk -y
 before_script:
   - gcloud beta emulators datastore start &
   - $(gcloud beta emulators datastore env-init)
