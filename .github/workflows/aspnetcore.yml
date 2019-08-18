@@ -30,7 +30,7 @@ jobs:
     - name: Test
       run: dotnet test
       env: 
-        DATASTORE_EMULATOR_HOST: datastore-emulator:${{ job.services.datastore-emulator.ports[8081] }}
+        DATASTORE_EMULATOR_HOST: localhost:${{ job.services.datastore-emulator.ports[8081] }}
         GRPC_DNS_RESOLVER: native
         GRPC_VERBOSITY: DEBUG 
         GRPC_TRACE: api,cares_resolver,call_error,channel
