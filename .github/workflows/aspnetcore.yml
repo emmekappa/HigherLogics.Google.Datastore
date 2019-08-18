@@ -19,13 +19,14 @@ jobs:
 #        options: --entrypoint /start-datastore
    
     steps:
+    - users: actions/gcloud/cli@master
+      with: 
+          args: beta emulators datastore start 
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 2.2.401
-    - uses: actions/gcloud/cli@master
-      run: gcloud beta emulators datastore start &
     - name: Build
       run: dotnet build --configuration Release
     - name: Test
