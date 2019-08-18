@@ -5,6 +5,9 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    container:
+      image:  node:10.16-jessie
       
     services:
       datastore-emulator:
@@ -29,4 +32,4 @@ jobs:
     - name: Test
       run: dotnet test
       env: 
-        DATASTORE_EMULATOR_HOST: 127.0.0.1:${{ job.services.datastore-emulator.ports[8081] }}
+        DATASTORE_EMULATOR_HOST: datastore-emulator:${{ job.services.datastore-emulator.ports[8081] }}
