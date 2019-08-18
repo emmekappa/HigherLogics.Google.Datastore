@@ -6,7 +6,7 @@ jobs:
   build:
   
     services:
-      datastore:
+      datastore-emulator:
         image: singularities/datastore-emulator
         env:
          DATASTORE_PROJECT_ID: mappertests
@@ -30,4 +30,7 @@ jobs:
     - name: Test
       run: dotnet test
       env: 
-        DATASTORE_EMULATOR_HOST: datastore:${{ job.services.datastore.ports[8081] }}
+        DATASTORE_EMULATOR_HOST: datastore-emulator:${{ job.services.datastore-emulator.ports[8081] }}
+        GRPC_DNS_RESOLVER: native
+        GRPC_VERBOSITY: DEBUG 
+        GRPC_TRACE: api,cares_resolver,call_error,channel
