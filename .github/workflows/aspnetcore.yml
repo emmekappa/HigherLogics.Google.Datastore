@@ -4,7 +4,8 @@ on: [push]
 
 jobs:
   build:
-  
+    runs-on: ubuntu-latest
+    
     services:
       datastore-emulator:
         image: singularities/datastore-emulator
@@ -16,9 +17,7 @@ jobs:
         volumes:
         - /opt/data
         options: --entrypoint /start-datastore
-    
-    runs-on: ubuntu-latest
-    
+   
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
@@ -31,6 +30,3 @@ jobs:
       run: dotnet test
       env: 
         DATASTORE_EMULATOR_HOST: localhost:${{ job.services.datastore-emulator.ports[8081] }}
-        GRPC_DNS_RESOLVER: native
-        GRPC_VERBOSITY: DEBUG 
-        GRPC_TRACE: api,cares_resolver,call_error,channel
