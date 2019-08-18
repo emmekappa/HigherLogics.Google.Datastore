@@ -14,8 +14,8 @@ jobs:
          DATASTORE_LISTEN_ADDRESS: "0.0.0.0:8081"
         ports:
         - 8081:8081
-        volumes:
-        - /opt/data
+        #volumes:
+        #- /opt/data
         options: --entrypoint /start-datastore
    
     steps:
@@ -29,7 +29,7 @@ jobs:
     - name: Test
       run: dotnet test --logger:"console;verbosity=detailed"
       env: 
-        DATASTORE_EMULATOR_HOST: localhost:${{ job.services.datastore-emulator.ports[8081] }}
+        DATASTORE_EMULATOR_HOST: 127.0.0.1:${{ job.services.datastore-emulator.ports[8081] }}
         #GRPC_DNS_RESOLVER: native		
         GRPC_VERBOSITY: DEBUG 		
         GRPC_TRACE: api,cares_resolver,call_error,channel
