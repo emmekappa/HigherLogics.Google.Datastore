@@ -19,7 +19,7 @@ jobs:
 #        options: --entrypoint /start-datastore
    
     steps:
-    - users: actions/gcloud/cli@master
+    - uses: actions/gcloud/cli@master
       with: 
           args: beta emulators datastore start 
     - uses: actions/checkout@v1
