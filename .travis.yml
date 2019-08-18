@@ -16,7 +16,9 @@ before_install:
   - gcloud version
   - gcloud components install cloud-datastore-emulator
 before_script:
-  - gcloud beta emulators datastore start &
+  - gcloud beta emulators datastore start --no-store-on-disk --project mappertests --host-port 0.0.0.0:8081 &
+  - echo sleeping 5 seconds...
+  - sleep 5
   - $(gcloud beta emulators datastore env-init)
 script:
   - dotnet build --configuration Release
