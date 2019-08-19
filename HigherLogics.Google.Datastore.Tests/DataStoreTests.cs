@@ -10,11 +10,6 @@ namespace HigherLogics.Google.Datastore.Tests
 {
     public static class DataStoreTests
     {
-        static DataStoreTests()
-        {
-            //GrpcEnvironment.SetLogger(new ConsoleLogger());
-        }
-        
         [Fact]
         public static void Simple()
         {

@@ -31,15 +31,14 @@ namespace HigherLogics.Google.Datastore.Tests
             
             if (!queryResult.Entities.Any())
                 return;
-            
-            db.Delete(queryResult.Entities);
-            
-            /*using(var transaction = db.BeginTransaction()) {
-                
+
+            using (var transaction = db.BeginTransaction())
+            {
+
                 transaction.Delete(queryResult.Entities);
                 //transaction.Delete<T>(queryResult);
                 transaction.Commit();
-            }*/
+            }
         }
     }
 }
