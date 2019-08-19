@@ -31,4 +31,4 @@ jobs:
         #GRPC_DNS_RESOLVER: native		
         #DATASTORE_EMULATOR_HOST: 127.0.0.1:8081
         GRPC_VERBOSITY: DEBUG 		
-        GRPC_TRACE: api,cares_resolver,call_error,channel
+        GRPC_TRACE: call_error,health_check_client,http
