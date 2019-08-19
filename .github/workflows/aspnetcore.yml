@@ -15,17 +15,8 @@ jobs:
          STORE_ON_DISK: false
         ports:
         - 8081
-        #volumes:
-        #- /opt/data
-        #options: --entrypoint /start-datastore
    
     steps:
-#    - uses: actions/gcloud/cli@master
-#      with: 
-#          args: components install cloud-datastore-emulator
-#    - uses: actions/gcloud/cli@master
-#        with:
-#          args: beta emulators datastore start --quiet --no-store-on-disk --project mappertests --host-port 0.0.0.0:8081
     - uses: actions/checkout@v1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -39,5 +30,5 @@ jobs:
         DATASTORE_EMULATOR_HOST: localhost:${{ job.services.datastore-emulator.ports[8081] }}
         #GRPC_DNS_RESOLVER: native		
         #DATASTORE_EMULATOR_HOST: 127.0.0.1:8081
-        #GRPC_VERBOSITY: DEBUG 		
-        #GRPC_TRACE: api,cares_resolver,call_error,channel
+        GRPC_VERBOSITY: DEBUG 		
+        GRPC_TRACE: api,cares_resolver,call_error,channel

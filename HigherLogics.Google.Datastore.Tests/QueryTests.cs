@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Google.Cloud.Datastore.V1;
+using Grpc.Core;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -13,6 +14,7 @@ namespace HigherLogics.Google.Datastore.Tests
         public QueryTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
+            GrpcEnvironment.SetLogger(new TestOutputHelperLoggerAdapter(_testOutputHelper));
         }
 
         [Fact]
@@ -78,6 +80,4 @@ namespace HigherLogics.Google.Datastore.Tests
             Assert.Equal(2, entities.Count());
         }
     }
-
-   
 }
