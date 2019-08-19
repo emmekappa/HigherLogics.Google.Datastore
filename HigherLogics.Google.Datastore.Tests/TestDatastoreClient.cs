@@ -1,6 +1,5 @@
-using System;
+using System.Linq;
 using Google.Cloud.Datastore.V1;
-using Grpc.Core;
 
 namespace HigherLogics.Google.Datastore.Tests
 {
@@ -27,7 +26,8 @@ namespace HigherLogics.Google.Datastore.Tests
         {
             var db = Create();
             var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
-            
+            if (!queryResult.Any())
+                return;
             using(var transaction = db.BeginTransaction()) {
                 
                 transaction.Delete<T>(queryResult);
