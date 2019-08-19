@@ -26,16 +26,16 @@ namespace HigherLogics.Google.Datastore.Tests
         {
             var db = Create();
             var query = db.CreateQuery<T>();
-            var queryResult = db.RunQuery(query);
+            var queryResult = db.RunQuery(query).Entities.ToList();
             //var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
             
-            if (!queryResult.Entities.Any())
+            if (!queryResult.Any())
                 return;
 
             using (var transaction = db.BeginTransaction())
             {
 
-                transaction.Delete(queryResult.Entities);
+                transaction.Delete(queryResult);
                 //transaction.Delete<T>(queryResult);
                 transaction.Commit();
             }
