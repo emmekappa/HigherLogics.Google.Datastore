@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Grpc.Core;
-using Grpc.Core.Logging;
 using Xunit;
 
 namespace HigherLogics.Google.Datastore.Tests
@@ -14,7 +12,7 @@ namespace HigherLogics.Google.Datastore.Tests
     {
         static DataStoreTests()
         {
-            GrpcEnvironment.SetLogger(new ConsoleLogger());
+            //GrpcEnvironment.SetLogger(new ConsoleLogger());
         }
         
         [Fact]
