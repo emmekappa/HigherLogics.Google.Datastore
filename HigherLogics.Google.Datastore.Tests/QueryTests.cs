@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using Google.Cloud.Datastore.V1;
-using Grpc.Core;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -14,15 +12,9 @@ namespace HigherLogics.Google.Datastore.Tests
         public QueryTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            GrpcEnvironment.SetLogger(new TestOutputHelperLoggerAdapter(_testOutputHelper));
+            //GrpcEnvironment.SetLogger(new TestOutputHelperLoggerAdapter(_testOutputHelper));
         }
 
-        [Fact]
-        public void DebugEnvVar()
-        {
-            _testOutputHelper.WriteLine($"DATASTORE_EMULATOR_HOST ENV IS = {Environment.GetEnvironmentVariable("DATASTORE_EMULATOR_HOST")}");
-        }
-        
         [Fact]
         public void FilterEqual()
         {
