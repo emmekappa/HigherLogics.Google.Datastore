@@ -35,7 +35,7 @@ jobs:
     - name: Test
       run: dotnet test --logger:"console;verbosity=detailed"
       env: 
-        DATASTORE_EMULATOR_HOST: 127.0.0.1:${{ job.services.datastore-emulator.ports[8081] }}
+        DATASTORE_EMULATOR_HOST: localhost:${{ job.services.datastore-emulator.ports[8081] }}
         #GRPC_DNS_RESOLVER: native		
         #DATASTORE_EMULATOR_HOST: 127.0.0.1:8081
         GRPC_VERBOSITY: DEBUG 		
