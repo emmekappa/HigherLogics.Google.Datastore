@@ -4,14 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Google.Cloud.Datastore.V1;
 using Grpc.Core;
+using Grpc.Core.Logging;
 using Xunit;
 
 namespace HigherLogics.Google.Datastore.Tests
 {
     public static class DataStoreTests
     {
+        static DataStoreTests()
+        {
+            GrpcEnvironment.SetLogger(new ConsoleLogger());
+        }
+        
         [Fact]
         public static void Simple()
         {
