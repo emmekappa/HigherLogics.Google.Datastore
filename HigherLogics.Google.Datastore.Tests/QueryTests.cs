@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using Google.Cloud.Datastore.V1;
 using Xunit;
 using Xunit.Abstractions;
@@ -75,7 +74,8 @@ namespace HigherLogics.Google.Datastore.Tests
             query.Filter =
                 Filter<SimpleWithEntityField>.Property(x => x.Baz, "__tag", PropertyFilter.Types.Operator.Equal);
             var queryResults = db.RunQueryLazily(query);
-            Assert.Equal(2, queryResults.Count());
+            var entities = queryResults.GetAllResults().Entities.ToList();
+            Assert.Equal(2, entities.Count());
         }
     }
 

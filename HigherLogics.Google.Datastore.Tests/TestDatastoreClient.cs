@@ -34,7 +34,6 @@ namespace HigherLogics.Google.Datastore.Tests
 
             using (var transaction = db.BeginTransaction())
             {
-
                 transaction.Delete(queryResult);
                 //transaction.Delete<T>(queryResult);
                 transaction.Commit();
