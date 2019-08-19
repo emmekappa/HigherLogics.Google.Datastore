@@ -25,12 +25,17 @@ namespace HigherLogics.Google.Datastore.Tests
         public static void DeleteAllEntitiesOfKind<T>() where T : class
         {
             var db = Create();
-            var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
-            if (!queryResult.Any())
+            var query = db.CreateQuery<T>();
+            var queryResult = db.RunQuery(query);
+            //var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
+            
+            if (!queryResult.Entities.Any())
                 return;
+            
             using(var transaction = db.BeginTransaction()) {
                 
-                transaction.Delete<T>(queryResult);
+                transaction.Delete(queryResult.Entities);
+                //transaction.Delete<T>(queryResult);
                 transaction.Commit();
             }
         }
