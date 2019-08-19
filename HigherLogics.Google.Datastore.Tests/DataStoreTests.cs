@@ -4,14 +4,23 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Google.Cloud.Datastore.V1;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace HigherLogics.Google.Datastore.Tests
 {
-    public static class DataStoreTests
+    public class DataStoreTests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public DataStoreTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+        
         [Fact]
-        public static void Simple()
+        public void Simple()
         {
             var db = TestDatastoreClient.Create();
             var x = new Simple { Baz = "Hello world!" };
@@ -32,7 +41,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void FailValidation()
+        public void FailValidation()
         {
             var db = TestDatastoreClient.Create();
             var x = new ValidatedSample { Name = "hello world!" };
@@ -44,7 +53,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void DeleteSimple()
+        public void DeleteSimple()
         {
             var db = TestDatastoreClient.Create();
             var x = new Simple { Baz = "Hello world!" };
@@ -61,7 +70,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void ComplexTests()
+        public void ComplexTests()
         {
             var x = new Complex
             {
@@ -86,7 +95,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void NestedEntityTests()
+        public void NestedEntityTests()
         {
             var x = new NestedEntities
             {
@@ -126,7 +135,7 @@ namespace HigherLogics.Google.Datastore.Tests
 
         
         [Fact]
-        public static void NestedStructTests()
+        public void NestedStructTests()
         {
             var x = new NestedStruct
             {
@@ -150,7 +159,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void FKTest()
+        public void FKTest()
         {
             var s = new Simple
             {
@@ -195,7 +204,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void BulkTests()
+        public void BulkTests()
         {
             var x = new BulkTest
             {
@@ -236,7 +245,7 @@ namespace HigherLogics.Google.Datastore.Tests
         }
 
         [Fact]
-        public static void QueryTests()
+        public void QueryTests()
         {
             var db = TestDatastoreClient.Create();
             
@@ -258,5 +267,13 @@ namespace HigherLogics.Google.Datastore.Tests
             Assert.Equal(2, queryResult.Count());
         }
 
+        [Fact]
+        public void NoQueryResult()
+        {
+            var db = TestDatastoreClient.Create();
+            
+            var queryResult = db.RunQuery(new Query("faaaakeee")).Entities;
+            Assert.Empty(queryResult);
+        }
     }
 }
