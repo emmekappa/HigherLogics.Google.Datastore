@@ -14,7 +14,7 @@ jobs:
          CONSISTENCY: 1.0
          STORE_ON_DISK: false
         ports:
-        - 8081
+        - 8081/tcp
    
     steps:
     - uses: actions/checkout@v1
