@@ -5,10 +5,7 @@ namespace HigherLogics.Google.Datastore.Tests
 {
     public class TestDatastoreClient
     {
-        const string emulatorHost = "localhost";
-        const int emulatorPort = 8081;
         const string projectId = "mappertests";
-        const string namespaceId = "";
 
         public static DatastoreDb Create()
         {
@@ -25,10 +22,10 @@ namespace HigherLogics.Google.Datastore.Tests
         public static void DeleteAllEntitiesOfKind<T>() where T : class
         {
             var db = Create();
-            
             var query = db.CreateQuery<T>();
             var queryResult = db.RunQuery(query).Entities;
             //var queryResult = db.RunQuery(db.CreateQuery<T>()).Entities<T>();
+            
             
             if (!queryResult.Any())
                 return;

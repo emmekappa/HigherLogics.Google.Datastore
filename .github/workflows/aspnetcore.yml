@@ -11,8 +11,8 @@ jobs:
         image: emmekappa/google-cloud-datastore-emulator
         env:
          DATASTORE_PROJECT_ID: mappertests
-         CONSISTENCY: 1.0
-         STORE_ON_DISK: false
+         CONSISTENCY: "1.0"
+         STORE_ON_DISK: "false"
         ports:
         - 8081/tcp
    
@@ -30,5 +30,5 @@ jobs:
         DATASTORE_EMULATOR_HOST: 127.0.0.1:${{ job.services.datastore-emulator.ports[8081] }}
         #GRPC_DNS_RESOLVER: native		
         #DATASTORE_EMULATOR_HOST: 127.0.0.1:8081
-        GRPC_VERBOSITY: INFO
-        GRPC_TRACE: call_error,health_check_client,http
+        #GRPC_VERBOSITY: INFO
+        #GRPC_TRACE: call_error,health_check_client,http
